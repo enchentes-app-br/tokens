@@ -48,4 +48,35 @@ await fastify.register(FastifyPluginJWT, {
   secret: process.env.JWT_SECRET,
 });
 
+fastify.get('/', {
+  schema: {
+    summary: 'Retrieve Service Information',
+    tags: ['tokens'],
+    response: {
+      200: {
+        type: 'object',
+        required: ['name', 'version', 'description'],
+        additionalProperties: false,
+        properties: {
+          name: { type: 'string' },
+          version: { type: 'string' },
+          description: { type: 'string' },
+        },
+      },
+    },
+  },
+  handler: async function(request, reply) {
+    reply.status(200)
+      .send({
+        name: pkg.name,
+        version: pkg.version,
+        description: pkg.description,
+      });
+  },
+});
+
+// -------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------
+
 export default fastify;
