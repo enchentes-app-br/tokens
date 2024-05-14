@@ -3,6 +3,7 @@ import Fastify from 'fastify';
 import FastifyPluginSwagger from '@fastify/swagger';
 import FastifyPluginSwaggerUI from '@fastify/swagger-ui';
 import FastifyPluginCORS from '@fastify/cors';
+import FastifyPluginJWT from '@fastify/jwt';
 
 import { promises as fs } from 'fs';
 
@@ -41,6 +42,10 @@ await fastify.register(FastifyPluginSwaggerUI, {
 
 await fastify.register(FastifyPluginCORS, {
   origin: '*',
+});
+
+await fastify.register(FastifyPluginJWT, {
+  secret: process.env.JWT_SECRET,
 });
 
 export default fastify;
