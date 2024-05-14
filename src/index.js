@@ -5,6 +5,8 @@ import FastifyPluginSwaggerUI from '@fastify/swagger-ui';
 import FastifyPluginCORS from '@fastify/cors';
 import FastifyPluginJWT from '@fastify/jwt';
 
+import TokensRouteCreate from './routes/create.js';
+
 import { promises as fs } from 'fs';
 
 const fastify = Fastify({
@@ -76,6 +78,8 @@ fastify.get('/', {
 });
 
 // -------------------------------------------------------------------------------------------------
+
+fastify.post('/v1/tokens', TokensRouteCreate);
 
 // -------------------------------------------------------------------------------------------------
 
