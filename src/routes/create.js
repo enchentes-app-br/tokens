@@ -8,7 +8,7 @@ export default {
       201: {
         content: {
           'application/jwt': {
-            schema: { type: 'string' },
+            schema: { $ref: 'JWT' },
           },
         },
       },
