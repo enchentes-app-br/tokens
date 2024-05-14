@@ -3,6 +3,6 @@
 Tokens Service
 
 ```
-docker compose up \
-    --detach
+docker compose run --rm tokens npm install
+docker compose up --detach
 ```
