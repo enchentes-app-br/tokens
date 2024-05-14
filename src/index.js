@@ -9,8 +9,6 @@ import TokensSchemaJWT from './schemas/JWT.js';
 
 import TokensRouteCreate from './routes/create.js';
 
-import { promises as fs } from 'fs';
-
 const fastify = Fastify({
   logger: true,
   ajv: {
@@ -22,14 +20,11 @@ const fastify = Fastify({
   },
 });
 
-const pkg = JSON.parse(await fs.readFile('./package.json', 'utf8'));
-
 await fastify.register(FastifyPluginSwagger, {
   openapi: {
     info: {
-      title: pkg.name,
-      version: pkg.version,
-      description: pkg.description,
+      title: process.env.npm_package_name,
+      version: process.env.npm_package_version,
     },
     tags: [
       {
@@ -59,12 +54,11 @@ fastify.get('/', {
     response: {
       200: {
         type: 'object',
-        required: ['name', 'version', 'description'],
+        required: ['name', 'version'],
         additionalProperties: false,
         properties: {
           name: { type: 'string' },
           version: { type: 'string' },
-          description: { type: 'string' },
         },
       },
     },
@@ -72,9 +66,8 @@ fastify.get('/', {
   handler: async function(request, reply) {
     reply.status(200)
       .send({
-        name: pkg.name,
-        version: pkg.version,
-        description: pkg.description,
+        name: process.env.npm_package_name,
+        version: process.env.npm_package_version,
       });
   },
 });
