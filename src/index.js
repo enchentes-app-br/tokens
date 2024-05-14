@@ -1,5 +1,10 @@
 import Fastify from 'fastify';
 
+import FastifyPluginSwagger from '@fastify/swagger';
+import FastifyPluginSwaggerUI from '@fastify/swagger-ui';
+
+import { promises as fs } from 'fs';
+
 const fastify = Fastify({
   logger: true,
   ajv: {
@@ -9,6 +14,28 @@ const fastify = Fastify({
       strict: false,
     },
   },
+});
+
+const pkg = JSON.parse(await fs.readFile('./package.json', 'utf8'));
+
+await fastify.register(FastifyPluginSwagger, {
+  openapi: {
+    info: {
+      title: pkg.name,
+      version: pkg.version,
+      description: pkg.description,
+    },
+    tags: [
+      {
+        name: 'tokens',
+        description: 'Tokens Service',
+      },
+    ],
+  },
+});
+
+await fastify.register(FastifyPluginSwaggerUI, {
+  routePrefix: '/docs',
 });
 
 export default fastify;
