@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 
 import FastifyPluginSwagger from '@fastify/swagger';
 import FastifyPluginSwaggerUI from '@fastify/swagger-ui';
+import FastifyPluginCORS from '@fastify/cors';
 
 import { promises as fs } from 'fs';
 
@@ -36,6 +37,10 @@ await fastify.register(FastifyPluginSwagger, {
 
 await fastify.register(FastifyPluginSwaggerUI, {
   routePrefix: '/docs',
+});
+
+await fastify.register(FastifyPluginCORS, {
+  origin: '*',
 });
 
 export default fastify;
