@@ -1,0 +1,21 @@
+services:
+  tokens:
+    image: "node:20.12"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.tokens.rule: "Host(`${TOKENS_HOSTNAME:-tokens.localhost}`)"
+      traefik.http.services.tokens.loadbalancer.server.port: "8080"
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - "./src:/usr/local/src"
+    networks:
+      - "enchentes-app-br"
+    working_dir: "/usr/local/src"
+    command:
+      - "npm"
+      - "start"
+
+networks:
+  enchentes-app-br:
+    name: "enchentes-app-br"
+    external: true
