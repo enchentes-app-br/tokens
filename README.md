@@ -1,6 +1,6 @@
 # tokens
 
-Tokens Service
+Tokens Service <http://tokens.localhost/docs>
 
 ```console
 docker compose run --rm install
