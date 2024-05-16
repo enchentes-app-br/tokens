@@ -2,7 +2,7 @@
 
 Tokens Service
 
-```
-docker compose run --rm tokens npm install
+```console
+docker compose run --rm install
 docker compose up --detach
 ```

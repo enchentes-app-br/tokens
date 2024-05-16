@@ -1,5 +1,5 @@
 services:
-  tokens:
+  tokens: &tokens
     image: "node:20.12"
     labels:
       traefik.enable: "true"
@@ -16,6 +16,13 @@ services:
       - "start"
     environment:
       JWT_SECRET: "${JWT_SECRET:-foobar}"
+  install:
+    <<: *tokens
+    command:
+      - "npm"
+      - "install"
+    profiles:
+      - "deploy"
 
 networks:
   enchentes-app-br:
