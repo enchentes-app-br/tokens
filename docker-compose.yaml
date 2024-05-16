@@ -1,5 +1,5 @@
 services:
-  tokens: &tokens
+  api: &api
     image: "node:20.12"
     labels:
       traefik.enable: "true"
@@ -17,7 +17,7 @@ services:
     environment:
       JWT_SECRET: "${JWT_SECRET:-foobar}"
   install:
-    <<: *tokens
+    <<: *api
     command:
       - "npm"
       - "install"
